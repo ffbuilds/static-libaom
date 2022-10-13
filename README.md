@@ -1,2 +1,2 @@
-# static-aom
-Static build of AOM
+# static-libaom
+Static build of libaom
