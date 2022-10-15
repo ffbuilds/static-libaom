@@ -30,8 +30,18 @@ COPY --from=download /tmp/aom/ /tmp/aom/
 COPY --from=vmaf /usr/local/lib/pkgconfig/libvmaf.pc /usr/local/lib/pkgconfig/libvmaf.pc
 COPY --from=vmaf /usr/local/lib/libvmaf.a /usr/local/lib/libvmaf.a
 COPY --from=vmaf /usr/local/include/libvmaf/ /usr/local/include/libvmaf/
+ARG TARGETPLATFORM
 WORKDIR /tmp/aom/build_tmp
 RUN \
+  case ${TARGETPLATFORM} in \
+    linux/arm/v*) \
+      # Fake it 'til we make it
+      touch /usr/local/lib/pkgconfig/aom.pc && \
+      touch /usr/local/lib/libaom.a && \
+      mkdir -p /usr/local/include/aom/ && \
+      exit 0 \
+    ;; \
+  esac && \
   apk add --no-cache --virtual build \
     build-base cmake yasm nasm perl pkgconf && \
   cmake \
