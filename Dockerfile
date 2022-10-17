@@ -7,11 +7,13 @@ ARG AOM_VERSION=3.5.0
 ARG AOM_URL="https://aomedia.googlesource.com/aom"
 ARG AOM_COMMIT=bcfe6fbfed315f83ee8a95465c654ee8078dbff9
 
-FROM ghcr.io/ffbuilds/static-libvmaf:main@sha256:31e8e6f73501b87f794bcb61e4fe8373a99c99d0937efaae1028ef3a4c5ed4e6 AS vmaf
+# Must be specified
+ARG ALPINE_VERSION
 
-# bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
-# bump: alpine link "Release notes" https://alpinelinux.org/posts/Alpine-$LATEST-released.html
-FROM alpine:3.16.2 AS base
+FROM ghcr.io/ffbuilds/static-libvmaf-alpine_${ALPINE_VERSION}:main AS vmaf
+
+# Must be specified
+FROM alpine:${ALPINE_VERSION} AS base
 
 FROM base AS download
 ARG AOM_VERSION
@@ -58,6 +60,11 @@ RUN \
     -DCMAKE_INSTALL_LIBDIR=lib \
     .. && \
   make -j$(nproc) install && \
+  # Sanity tests
+  pkg-config --exists --modversion --path aom && \
+  ar -t /usr/local/lib/libaom.a && \
+  readelf -h /usr/local/lib/libaom.a && \
+  # Cleanup
   apk del build
 
 FROM scratch
