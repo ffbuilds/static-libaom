@@ -24,6 +24,11 @@ jobs:
           # bump: alpine link "Release notes" https://alpinelinux.org/posts/Alpine-$LATEST-released.html
           - 3.16.2 # updateme
           - edge
+        include:
+          - alpine_version: 3.16.2
+            libvmaf_version: sha256:91173f8b89d81bc3ee8f0a6b0ba3ed11bdbbc3af8315fcdff7165900a893862e
+          - alpine_version: edge
+            libvmaf_version: sha256:5286265af89dc30e56017dba681b6a0d07f7dca38b5f1dcc312fc842e25cd9ea
 
     steps:
       - name: Checkout repository
@@ -55,6 +60,7 @@ jobs:
           context: .
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine_version }}
+            LIBVMAF_VERSION=main@${{ matrix.libvmaf_version }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
           push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.meta.outputs.tags }}

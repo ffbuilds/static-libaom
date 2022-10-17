@@ -10,10 +10,13 @@ ARG AOM_COMMIT=bcfe6fbfed315f83ee8a95465c654ee8078dbff9
 # Must be specified
 ARG ALPINE_VERSION
 
-FROM ghcr.io/ffbuilds/static-libvmaf-alpine_${ALPINE_VERSION}:main AS vmaf
+# Can be specified as anything@sha256:<hash>
+ARG LIBVMAF_VERSION=main
 
 # Must be specified
 FROM alpine:${ALPINE_VERSION} AS base
+
+FROM ghcr.io/ffbuilds/static-libvmaf-alpine_${ALPINE_VERSION}:${LIBVMAF_VERSION} AS vmaf
 
 FROM base AS download
 ARG AOM_VERSION
