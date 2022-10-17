@@ -7,7 +7,7 @@ ARG AOM_VERSION=3.5.0
 ARG AOM_URL="https://aomedia.googlesource.com/aom"
 ARG AOM_COMMIT=bcfe6fbfed315f83ee8a95465c654ee8078dbff9
 
-FROM ghcr.io/ffbuilds/static-libvmaf:main@sha256:52598ef2a3af734b539372ba56dd88b417e5f664dbfc6a9146157185e20f6062 AS vmaf
+FROM ghcr.io/ffbuilds/static-libvmaf:main@sha256:31e8e6f73501b87f794bcb61e4fe8373a99c99d0937efaae1028ef3a4c5ed4e6 AS vmaf
 
 # bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
 # bump: alpine link "Release notes" https://alpinelinux.org/posts/Alpine-$LATEST-released.html
