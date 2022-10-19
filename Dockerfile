@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 
 # bump: aom /AOM_VERSION=([\d.]+)/ git:https://aomedia.googlesource.com/aom|*
 # bump: aom after ./hashupdate Dockerfile AOM $LATEST
@@ -13,7 +14,6 @@ ARG ALPINE_VERSION
 # Can be specified as anything@sha256:<hash>
 ARG LIBVMAF_VERSION=main
 
-# Must be specified
 FROM alpine:${ALPINE_VERSION} AS base
 
 FROM ghcr.io/ffbuilds/static-libvmaf-alpine_${ALPINE_VERSION}:${LIBVMAF_VERSION} AS vmaf
@@ -40,6 +40,7 @@ WORKDIR /tmp/aom/build_tmp
 RUN \
   case ${TARGETPLATFORM} in \
     linux/arm/v*) \
+      # Fails on https://gist.github.com/binoculars/4e743eb4c822f336d0b3e0b056caafaf
       # Fake it 'til we make it
       touch /usr/local/lib/pkgconfig/aom.pc && \
       touch /usr/local/lib/libaom.a && \
