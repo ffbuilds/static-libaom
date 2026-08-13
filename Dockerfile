@@ -4,9 +4,9 @@
 # bump: aom after ./hashupdate Dockerfile AOM $LATEST
 # bump: aom after COMMIT=$(git ls-remote https://aomedia.googlesource.com/aom v$LATEST^{} | awk '{print $1}') && sed -i -E "s/^ARG AOM_COMMIT=.*/ARG AOM_COMMIT=$COMMIT/" Dockerfile
 # bump: aom link "CHANGELOG" https://aomedia.googlesource.com/aom/+/refs/tags/v$LATEST/CHANGELOG
-ARG AOM_VERSION=3.6.0
+ARG AOM_VERSION=3.14.1
 ARG AOM_URL="https://aomedia.googlesource.com/aom"
-ARG AOM_COMMIT=3c65175b1972da4a1992c1dae2365b48d13f9a8d
+ARG AOM_COMMIT=03087864cf4bea6abb0d28f95cf7843511413d8f
 
 # Must be specified
 ARG ALPINE_VERSION
